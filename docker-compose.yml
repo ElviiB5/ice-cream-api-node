@@ -4,11 +4,11 @@ services:
     container_name: mysqlcontainer
     command: --default-authentication-plugin=mysql_native_password
     restart: unless-stopped
-    volumes:
-      - ./db/init.sql:/docker-entrypoint-initdb.d/0_init.sql
-      - $HOME/database:/var/lib/mysql
     ports:
       - 3306:3306
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/0_init.sql
+      - dbdata:/var/lib/mysql
     expose:
       - 3306
     environment:
@@ -45,6 +45,9 @@ services:
       - mysqldb
     networks:
       - internalnet
+
+volumes:
+  dbdata:
 
 networks:
   internalnet:
